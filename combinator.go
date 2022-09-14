@@ -2,12 +2,12 @@ package combinator
 
 import "context"
 
-func Recombo(ctx context.Context, a []rune, results chan<- []rune) {
-	rc(ctx, []rune{}, a, results)
+func Recombo[T any](ctx context.Context, a []T, results chan<- []T) {
+	rc(ctx, []T{}, a, results)
 	close(results)
 }
 
-func rc(ctx context.Context, res []rune, a []rune, results chan<- []rune) bool {
+func rc[T any](ctx context.Context, res []T, a []T, results chan<- []T) bool {
 	select {
 	case <-ctx.Done():
 		return false
@@ -20,7 +20,7 @@ func rc(ctx context.Context, res []rune, a []rune, results chan<- []rune) bool {
 		return true
 	}
 
-	excluded := make([]rune, len(a)-1)
+	excluded := make([]T, len(a)-1)
 	for i := 0; i < len(a); i++ {
 		for j := 0; j < len(a); j++ {
 			if j < i {

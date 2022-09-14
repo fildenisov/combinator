@@ -8,10 +8,10 @@ import (
 )
 
 func main() {
-	res := make(chan []rune)
-	go combinator.Recombo(context.Background(), []rune("abcd"), res)
+	res := make(chan []int)
+	go combinator.Recombo(context.Background(), []int{1, 2, 3, 4}, res)
 
 	for r := range res {
-		fmt.Println(string(r))
+		fmt.Println(r)
 	}
 }
